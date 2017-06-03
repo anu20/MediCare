@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head %}
+{% endblock head %}
+
+{% block main %}
+
+<div class='row'>
+
+{% for lab in labs %}
+		<div class='col-sm-4'>
+
+
+
+			<div class="thumbnail">
+                                        <p>Labs<p>
+					{% if lab.labimage_set.all %}
+
+							{% for item in lab.labimage_set.all %}
+
+							{% if item.featured %}
+							<div style="
+							width:200px;
+							height:200px;margin:0 auto;">
+
+								<a href='{{ lab.get_absolute_url }}'>
+									<div class='background_img_thumb' style="height:50px;background-image: url('{{ MEDIA_URL }}{{ item.image }}');"></div>
+								</a>
+							</div>
+							<img class='img-responsive' src="{{ MEDIA_URL }}{{ item.image }}" /> 
+							{% endif %}
+							 
+
+
+							{% endfor %}
+
+					{% else %}
+					<img class='img-responsive' src="{% static 'img/placeholder.svg' %}" />
+					{% endif %}
+
+					<div class="caption">
+					<a href='{{ lab.get_absolute_url }}'> <h3>{{ lab.title }}</h3></a>
+					<p>{{ lab.description|truncatewords:15 }}</p>
+					<p><a href="{{ lab.get_absolute_url }}" class="btn btn-primary" role="button">Schedule</a> <a href="#" class="btn btn-default" role="button">{{ lab.price }}</a></p>
+					</div>
+		   	 </div>
+
+
+		</div>
+
+{% cycle "" "" "</div><br/><hr/><div class='row'>" %}
+{% endfor %}
+
+</div>
+
+{% endblock main %}

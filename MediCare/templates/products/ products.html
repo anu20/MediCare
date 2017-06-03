@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+
+<div class='row'>
+
+{% for product in products %}
+		<div class='col-sm-4'>
+
+
+
+			<div class="thumbnail">
+					{% if product.productimage_set.all %}
+
+							{% for item in product.productimage_set.all %}
+
+							{% if item.featured %}
+							<div style="
+							width:200px;
+							height:200px;margin:0 auto;">
+
+								<a href='{{ product.get_absolute_url }}'>
+									<div class='background_img_thumb' style="height:200px;background-image: url('{{ MEDIA_URL }}{{ item.image }}');"></div>
+								</a>
+							</div>
+							<!-- <img class='img-responsive' src="{{ MEDIA_URL }}{{ item.image }}" /> -->
+							{% endif %}
+							 
+
+
+							{% endfor %}
+
+					{% else %}
+					<img class='img-responsive' src='{% static "img/placeholder.svg" %}' />
+					{% endif %}
+
+					<div class="caption">
+					<a href='{{ product.get_absolute_url }}'> <h3>{{ product.title }}</h3></a>
+					<p>{{ product.description|truncatewords:15}}</p>
+					<p><a href="{{ product.get_absolute_url }}" class="btn btn-primary" role="button">View</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+					</div>
+		   	 </div>
+
+
+		</div>
+
+{% cycle "" "" "</div><br/><hr/><div class='row'>" %}
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% load staticfiles i18n %}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}MediCare{% endblock %}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/bootcamp.js' %}"></script>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    {% block body %}
+  	<!--banner-->
+        <header>
+	<section id="banner" class="banner">
+		<div class="bg-color">
+			<nav class="navbar navbar-default navbar-fixed-top">
+			  <div class="container">
+			  	<div class="col-md-12">
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      <a class="navbar-brand" href="{% url 'prescription' %}"><img src="{% static 'img/logo.png' %}"
+style="width: 140px; margin-top: -16px;"></a>
+				    </div>
+				    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+				      <ul class="nav navbar-nav">
+				        <li><a href="{% url 'prescription' %}">Medicine</a></li>
+				        <li><a href="{% url 'labs' %}">Labs</a></li>
+				        <li><a href="">eConsult</a></li>
+                                        <li></li>
+				        <li><a href="{% url 'products_all' %}">Health Products</a></li>
+                                        <li><a href="">Doctors</a></li>
+                                        <li><a href="{% url 'cart' %}">Cart <span class="badge">{% if not request.session.items_total %} 0 {% else %} {{ request.session.items_total }} {% endif%}</span></a></li>
+            {% if user.is_authenticated %}
+            <li><a href="#">Account</a></li>
+            <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'auth_login' %}">Login</a></li>
+            <li><a href="{% url 'auth_register' %}">Register</a></li>
+            {% endif %}
+					<li class=""><a href="#contact"></a></li>
+				      </ul>
+                                      
+				    </div>
+				</div>
+			  </div>
+			</nav>
+                        {% block content %}
+			 
+                        {% endblock %}
+	</section>
+        </header>
+        <main>
+	   <div class="container">
+           {% block main %}
+           {% include 'app.html' %}
+           {% endblock main %}
+           </div>
+        </main>
+	<!--/ banner-->
+	<!--service-->
+	
+	<!--/ contact-->
+	<!--footer-->
+	<footer id="footer">
+		<div class="top-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4 marb20">
+							
+							
+					</div>
+					<div class="col-md-4 col-sm-4 marb20">
+						<div class="ftr-tle">
+							<h4 class="white no-padding">Quick Links</h4>
+						</div>
+						<div class="info-sec">
+							<ul class="quick-info">
+								<li><a href="index.html"><i class="fa fa-circle"></i>Home</a></li>
+								<li><a href="#service"><i class="fa fa-circle"></i>Service</a></li>
+								<li><a href="#contact"><i class="fa fa-circle"></i>Appointment</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-4 marb20">
+						<div class="ftr-tle">
+							<h4 class="white no-padding">Follow us</h4>
+						</div>
+						<div class="info-sec">
+							<ul class="social-icon">
+								<li class="bglight-blue"><i class="fa fa-facebook"></i></li>
+								<li class="bgred"><i class="fa fa-google-plus"></i></li>
+								<li class="bgdark-blue"><i class="fa fa-linkedin"></i></li>
+								<li class="bglight-blue"><i class="fa fa-twitter"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-line">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						© Copyright Medilab Theme. All Rights Reserved
+                        <div class="credits">
+
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--/ footer-->
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/ga.js' %}"></script>
+    <script src="{% static 'contactform/contactform.js' %}"></script>
+       {% endblock body %} 
+  </body>
+</html>

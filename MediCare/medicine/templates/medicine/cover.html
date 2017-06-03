@@ -1,0 +1,359 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n static %}
+
+
+{% block head %}
+  <link href="{% static 'css/jquery.Jcrop.min.css' %}" rel="stylesheet">
+  <script src="{% static 'js/jquery.Jcrop.min.js' %}"></script>
+  <script src="{% static 'js/picture.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+{% endblock head %}
+
+
+{% block content %}
+ 
+ {% include 'container.html' %}
+{% endblock content %}
+{% block main %}
+	<!--service-->
+	<section id="service" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<h2 class="ser-title">Our Service</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="service-info">
+						<div class="icon">
+							<i class="fa fa-stethoscope"></i>
+						</div>
+						<div class="icon-info">
+							<h4>24 Hour Support</h4>
+							
+						</div>
+					</div>
+					<div class="service-info">
+						<div class="icon">
+							<i class="fa fa-ambulance"></i>
+						</div>
+						<div class="icon-info">
+							<h4>Emergency Services</h4>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="service-info">
+						<div class="icon">
+							<i class="fa fa-user-md"></i>
+						</div>
+						<div class="icon-info">
+							<h4>Medical Counseling</h4>
+							
+						</div>
+					</div>
+					<div class="service-info">
+						<div class="icon">
+							<i class="fa fa-medkit"></i>
+						</div>
+						<div class="icon-info">
+							<h4>Premium Healthcare</h4>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ service-->
+	<!--cta-->
+ {% include 'app.html' %}
+	<section>
+    				
+				  <div class="page-header">
+    <h1>Prescription</h1>
+  </div>
+  <div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      
+      <h3 style="margin-top: 0">Upload Picture</h3>
+      {% if filename %}
+      <img src="{{ filename }}" style="width: 150px; margin-bottom: 1em;">
+      {% else %}
+      <img src="{% static 'img/user.png' %}" style="width: 150px; margin-bottom: 1em;">
+      {% endif %}
+      <form enctype="multipart/form-data" method="post" action="{% url 'upload_picture' %}" id="picture-upload-form">
+        {% csrf_token %}
+        <input type="file" name="picture">
+        
+        <button type="submit" class="btn btn-default" id="btn-upload-picture" role="button">Upload Picture</button>
+      </form>
+         
+      <p>{{ uploaded_picture }}<p>
+      {% if uploaded_picture %}
+        <h3>uploaded</h3>
+        <form enctype="multipart/form-data" method="post" action="{% url 'save_uploaded_picture' %}">
+          {% csrf_token %}
+          <div class="modal fade" id="modal-upload-picture">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Crop Picture</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="selected-picture">
+                    <p>Crop the picture and then click on the <strong>Save Picture</strong>button</p>
+                    <img src="{% get_media_prefix %}prescriptions/{{ user.username }}_tmp.jpg?_={% now 'U' %}" id="crop-picture">
+                    <input type="hidden" id="x" name="x" />
+                    <input type="hidden" id="y" name="y" />
+                    <input type="hidden" id="w" name="w" />
+                    <input type="hidden" id="h" name="h" />
+                  </div>
+                  <script type="text/javascript">
+                    $(function () {
+                      $("#modal-upload-picture").modal();
+                      window.history.pushState("", "", "/prescription/");
+                    });
+                  </script>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      {% endif %}
+
+    </div>
+  </div>
+			
+	</section>
+	<!--cta-->
+	<!--about-->
+	<section id="about" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-4 col-xs-12">
+			        <div class="section-title">
+			          <h2 class="head-title lg-line">The MediCare</h2>
+			          <hr class="botm-line">
+
+			          <a href="" style="color: #0cb8b6; padding-top:10px;">Know more..</a>
+			        </div>
+			    </div>
+			    <div class="col-md-9 col-sm-8 col-xs-12">
+			       <div style="visibility: visible;" class="col-sm-9 more-features-box">
+			          <div class="more-features-box-text">
+			            <div class="more-features-box-text-icon"> <i class="fa fa-angle-right" aria-hidden="true"></i> </div>
+			            <div class="more-features-box-text-description">
+				    
+				        </div>
+			          </div>
+			          <div class="more-features-box-text">
+			            <div class="more-features-box-text-icon"> <i class="fa fa-angle-right" aria-hidden="true"></i> </div>
+			            <div class="more-features-box-text-description">
+				            <h3>It's something important you want to know.</h3>
+				            
+				        </div>
+                        </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	<!--/ about-->
+	<!--doctor team-->
+	<section id="doctor-team" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="ser-title">Meet Our Doctors!</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-6">
+			      <div class="thumbnail"> 
+			      	<img src="{% static 'img/doctor1.jpg' %}" alt="..." class="team-img">
+			        <div class="caption">
+			          <h3>Dr Jhanvi Singh</h3>
+			          <p>Eye Specialist </p>
+			          <ul class="list-inline">
+			            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+			            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+			            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+			          </ul>
+			        </div>
+			      </div>
+			    </div>
+			    <div class="col-md-3 col-sm-3 col-xs-6">
+			      <div class="thumbnail"> 
+			      	<img src="{% static 'img/doctor2.jpg' %}" alt="..." class="team-img">
+			        <div class="caption">
+			          <h3>Dr Ramesh Kumar</h3>
+			          <p>Dental Care</p>
+			          <ul class="list-inline">
+			            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+			            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+			            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+			          </ul>
+			        </div>
+			      </div>
+			    </div>
+			    <div class="col-md-3 col-sm-3 col-xs-6">
+			      <div class="thumbnail"> 
+			      	<img src="{% static 'img/doctor4.jpg' %}" alt="..." class="team-img">
+			        <div class="caption">
+			          <h3>Dr Mukesh Tiwari</h3>
+			          <p>Child Specialist</p>
+			          <ul class="list-inline">
+			            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+			            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+			            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+			          </ul>
+			        </div>
+			      </div>
+			    </div>
+			    <div class="col-md-3 col-sm-3 col-xs-6">
+			      <div class="thumbnail"> 
+			      	<img src="{% static 'img/doctor3.jpg' %}" alt="..." class="team-img">
+			        <div class="caption">
+			          <h3>Dr Reena Batra</h3>
+			          <p>Physiotherapist</p>
+			          <ul class="list-inline">
+			            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+			            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+			            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+			          </ul>
+			        </div>
+			      </div>
+			    </div>
+			</div>
+		</div>
+	</section>
+	<!--/ doctor team-->
+	<!--testimonial-->
+	<section id="testimonial" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="ser-title">see what patients are saying?</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="testi-details">
+						<!-- Paragraph -->
+						<p>Verified healtcare Products. Had a great experience</p>
+					</div>
+					<div class="testi-info">
+						<!-- User Image -->
+						<a href="#"><img src="img/thumb.png" alt="" class="img-responsive"></a>
+						<!-- User Name -->
+						<h3>Aanya<span>Roy</span></h3>
+					</div>
+				</div>
+			    <div class="col-md-4 col-sm-4">
+					<div class="testi-details">
+						<!-- Paragraph -->
+                                                <p>Qualified Doctors</p>
+						
+					</div>
+					<div class="testi-info">
+						<!-- User Image -->
+						<a href="#"><img src="img/thumb.png" alt="" class="img-responsive"></a>
+						<!-- User Name -->
+						<h3>Ashish<span>Sharma</span></h3>
+					</div>
+				</div>
+			    <div class="col-md-4 col-sm-4">
+					<div class="testi-details">
+						<!-- Paragraph -->
+						<p>Product was delivered late and some of them were out of stock.</p>
+					</div>
+					<div class="testi-info">
+						<!-- User Image -->
+						<a href="#"><img src="img/thumb.png" alt="" class="img-responsive"></a>
+						<!-- User Name -->
+						<h3>Kartik<span>Mehta</span></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ testimonial-->
+	<!--cta 2-->
+	<section id="cta-2" class="section-padding">
+		<div class="container">
+			<div class=" row">
+				<div class="col-md-2"></div>
+	            <div class="text-right-md col-md-4 col-sm-4">
+	              <h2 class="section-title white lg-line">« A few words<br> about us »</h2>
+	            </div>
+	            <div class="col-md-4 col-sm-5">
+	             
+	              <p class="text-right text-primary"><i>— MediCare Healthcare</i></p>
+	            </div>
+	            <div class="col-md-2"></div>
+	        </div>
+		</div>
+	</section>
+	<!--cta-->
+	<!--contact-->
+	<section id="contact" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="ser-title">Contact us</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-4 col-sm-4">
+			      <h3>Contact Info</h3>
+			      <div class="space"></div>
+			      <p><i class="fa fa-map-marker fa-fw pull-left fa-2x"></i>321 Preet Vihar<br>
+			        New Delhi, Delhi 17022</p>
+			      <div class="space"></div>
+			      <p><i class="fa fa-envelope-o fa-fw pull-left fa-2x"></i>info@medicare.com</p>
+			      <div class="space"></div>
+			      <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>+1 800 123 1234</p>
+			    </div>
+				<div class="col-md-8 col-sm-8 marb20">
+					<div class="contact-info">
+							<h3 class="cnt-ttl">Having Any Query! Or Book an appointment</h3>
+							<div class="space"></div>
+                            <div id="sendmessage">Your message has been sent. Thank you!</div>
+                            <div id="errormessage"></div>
+							<form action="" method="post" role="form" class="contactForm">
+							    <div class="form-group">
+                                    <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control br-radius-zero" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control br-radius-zero" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                    <div class="validation"></div>
+                                </div>
+                                
+								<div class="form-action">
+									<button type="submit" class="btn btn-form">Send Message</button>
+								</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ contact-->
+
+{% endblock main %}	

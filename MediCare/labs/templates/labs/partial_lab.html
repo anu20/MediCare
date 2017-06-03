@@ -1,0 +1,12 @@
+{% load i18n %}
+
+
+{% block main %}
+<li lab-id="{{ lab.pk }}" csrf="{{ csrf_token }}">
+  <div>
+    <div>
+      <p>{{ lab.linkfy_post|safe }}</p>
+    </div>
+  </div>
+</li>
+{% endblock main %}
